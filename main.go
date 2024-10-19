@@ -6,6 +6,26 @@ import (
 	"os"
 )
 
+type cliCommand struct {
+	name        string
+	description string
+	callback    func() error
+}
+
+var commandMap = map[string]cliCommand{
+
+	"help": {
+		name:        "help",
+		description: "Displays a help message",
+		callback:    commandHelp,
+	},
+	"exit": {
+		name:        "exit",
+		description: "Exit the Pokedex",
+		callback:    commandExit,
+	},
+}
+
 func commandHelp() error {
 	fmt.Println("Welcome to Pokedex")
 	fmt.Println("Usage: ")
@@ -22,26 +42,6 @@ func commandExit() error {
 }
 
 func main() {
-	type cliCommand struct {
-		name        string
-		description string
-		callback    func() error
-	}
-
-	var commandMap = map[string]cliCommand{
-
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
-		},
-		"exit": {
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    commandExit,
-		},
-	}
-
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
