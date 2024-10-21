@@ -4,12 +4,15 @@ import (
 	"fmt"
 )
 
-func commandHelp() error {
+func commandHelp(cfg *Config) error {
+	fmt.Println()
 	fmt.Println("Welcome to Pokedex")
 	fmt.Println("Usage: ")
 	fmt.Println()
-	fmt.Println("help: Displays a help message")
-	fmt.Println("exit: Exit the Pokedex")
+	allCommandsMap := commands()
+	for _, value := range allCommandsMap {
+		fmt.Printf("%s: %s\n", value.name, value.description)
+	}
 	fmt.Println()
 	return nil
 }
