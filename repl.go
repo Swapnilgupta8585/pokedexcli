@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func startRepl() {
@@ -18,14 +19,27 @@ func startRepl() {
 			break
 		}
 		text := scanner.Text()
+		parts := getCommand(text)
+
+		if len(parts) == 0 {
+			continue
+		}
+
+		commandName := parts[0]
+		args := ""
+
+		if len(parts) > 1 {
+			args = parts[1]
+		}
+
 		allCommands := commands()
-		command, exists := allCommands[text]
+		command, exists := allCommands[commandName]
 		if !exists {
 			fmt.Println("Unknown command. Type 'help' for a list of commands.")
 			continue
 		}
 
-		err := command.callback(&config)
+		err := command.callback(&config, args)
 		if err != nil {
 			fmt.Printf("Error executing command: %s\n", err)
 		}
@@ -34,4 +48,10 @@ func startRepl() {
 	if err := scanner.Err(); err != nil {
 		fmt.Printf("Error reading input: %s\n", err)
 	}
+}
+
+func getCommand(text string) []string {
+	loweredText := strings.ToLower(text)
+	fields := strings.Fields(loweredText)
+	return fields
 }
