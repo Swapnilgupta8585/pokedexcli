@@ -6,7 +6,7 @@ import (
 	"github.com/Swapnilgupta8585/pokedexcli/internal/pokeapi"
 )
 
-func commandMapb(cfg *Config) error {
+func commandMapb(cfg *Config, area string) error {
 	if cfg.previous != nil {
 		locations, err := pokeapi.PokeapiCall(*cfg.previous)
 		if err != nil {

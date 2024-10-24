@@ -6,7 +6,7 @@ import (
 	"github.com/Swapnilgupta8585/pokedexcli/internal/pokeapi"
 )
 
-func commandMap(cfg *Config) error {
+func commandMap(cfg *Config, area string) error {
 	fmt.Println()
 	locations, err := pokeapi.PokeapiCall(cfg.next)
 	if err != nil {
