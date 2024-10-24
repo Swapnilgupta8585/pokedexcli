@@ -3,7 +3,11 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"time"
+
+	"github.com/Swapnilgupta8585/pokedexcli/internal/pokecache"
 )
 
 type Data struct {
@@ -16,27 +20,44 @@ type Data struct {
 	} `json:"results"`
 }
 
-func PokeapiCall(url string) (Data, error) {
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return Data{}, fmt.Errorf("can not make a request to the url: %w", err)
-	}
+var cache = pokecache.NewCache(5 * time.Second)
 
-	client := http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return Data{}, fmt.Errorf("can not get a response: %w", err)
+func PokeapiCall(url string) (Data, error) {
+	value, ok := cache.Get(url)
+
+	if !ok {
+		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			return Data{}, fmt.Errorf("can not make a request to the url: %w", err)
+		}
+
+		client := http.Client{}
+		res, err := client.Do(req)
+		if err != nil {
+			return Data{}, fmt.Errorf("can not get a response: %w", err)
+		}
+		defer res.Body.Close()
+		if res.StatusCode != 200 {
+			return Data{}, fmt.Errorf("unexpected status code: %d", res.StatusCode)
+		}
+		dataBytes, err := io.ReadAll(res.Body)
+		if err != nil {
+			return Data{}, fmt.Errorf("error reading body: %w", err)
+		}
+
+		cache.Add(url, dataBytes)
+
+		var data Data
+		err = json.Unmarshal(dataBytes, &data)
+		if err != nil {
+			return Data{}, fmt.Errorf("can not unmarshal the json: %w", err)
+		}
+		return data, nil
 	}
-	if res.StatusCode != 200 {
-		return Data{}, fmt.Errorf("unexpected status code: %d", res.StatusCode)
-	}
-	defer res.Body.Close()
 
 	var data Data
-	decoder := json.NewDecoder(res.Body)
-	err = decoder.Decode(&data)
-	if err != nil {
-		return Data{}, fmt.Errorf("can not decode the json: %w", err)
+	if err := json.Unmarshal(value, &data); err != nil {
+		return Data{}, fmt.Errorf("error unmarshalling json: %w", err)
 	}
 	return data, nil
 }
