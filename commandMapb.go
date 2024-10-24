@@ -16,7 +16,7 @@ func commandMapb(cfg *Config, area string) error {
 		cfg.next = *locations.Next
 		cfg.previous = locations.Previous
 		for _, location := range locations.Results {
-			fmt.Printf("Pokedex > %s\n", location.Name)
+			fmt.Printf("- %s\n", location.Name)
 		}
 		fmt.Println()
 		return nil
