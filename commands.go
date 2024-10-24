@@ -1,5 +1,9 @@
 package main
 
+import (
+	"github.com/Swapnilgupta8585/pokedexcli/internal/pokeapi"
+)
+
 type cliCommand struct {
 	name        string
 	description string
@@ -9,6 +13,13 @@ type cliCommand struct {
 type Config struct {
 	next     string
 	previous *string
+	user     map[string]pokeapi.Pokemon
+}
+
+func NewNofig() *Config {
+	return &Config{
+		user: make(map[string]pokeapi.Pokemon),
+	}
 }
 
 func commands() map[string]cliCommand {
@@ -38,6 +49,11 @@ func commands() map[string]cliCommand {
 			name:        "explore <area-name>",
 			description: "explore and see a list of all the Pokémon in a given area",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch <pokemon name>",
+			description: "catch the pokemon and adds them to the user's pokedex",
+			callback:    commandCatch,
 		},
 	}
 }
