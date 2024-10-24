@@ -20,7 +20,7 @@ type Data struct {
 	} `json:"results"`
 }
 
-var cache = pokecache.NewCache(5 * time.Second)
+var cache = pokecache.NewCache(60 * time.Second)
 
 func PokeapiCall(url string) (Data, error) {
 	value, ok := cache.Get(url)
