@@ -7,7 +7,9 @@ import (
 func commandInspect(cfg *Config, pokemonName string) error {
 	pokemon, ok := cfg.user[pokemonName]
 	if !ok {
+		fmt.Println()
 		fmt.Println("you have not caught that pokemon")
+		fmt.Println()
 		return nil
 	}
 	fmt.Println()
