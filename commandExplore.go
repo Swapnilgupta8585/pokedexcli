@@ -12,7 +12,10 @@ func commandExplore(cfg *Config, area string) error {
 
 	pokemons, err := pokeapi.ExploreApiCall(newUrl)
 	if err != nil {
-		return fmt.Errorf("can not get the locations: %w", err)
+		fmt.Println()
+		fmt.Println("can not get the locations")
+		fmt.Println()
+		return nil
 	}
 	fmt.Println()
 	fmt.Printf("Exploring %s...\n", area)
