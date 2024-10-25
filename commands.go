@@ -16,12 +16,6 @@ type Config struct {
 	user     map[string]pokeapi.Pokemon
 }
 
-func NewNofig() *Config {
-	return &Config{
-		user: make(map[string]pokeapi.Pokemon),
-	}
-}
-
 func commands() map[string]cliCommand {
 	return map[string]cliCommand{
 
@@ -59,6 +53,11 @@ func commands() map[string]cliCommand {
 			name:        "inspect <pokemon name>",
 			description: "tells the name, height, weight, stats and type(s) of the Pokemon",
 			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "tells the names of all the pokemon user has caught",
+			callback:    commandPokedex,
 		},
 	}
 }
