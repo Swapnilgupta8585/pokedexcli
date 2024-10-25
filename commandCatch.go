@@ -15,11 +15,15 @@ func commandCatch(cfg *Config, pokemonName string) error {
 
 	pokemon, err := pokeapi.PokeApiCall(newUrl)
 	if err != nil {
-		return fmt.Errorf("can not get the pokemon information: %w", err)
+		fmt.Println()
+		fmt.Println("can not get the pokemon information")
+		fmt.Println()
+		return nil
 	}
-
+	fmt.Println()
 	if _, ok := cfg.user[pokemonName]; ok {
 		fmt.Printf("%s is already caught!\n", pokemonName)
+		fmt.Println()
 		return nil
 	}
 	fmt.Printf("Throwing a Pokeball at %s...\n", pokemonName)
@@ -29,6 +33,7 @@ func commandCatch(cfg *Config, pokemonName string) error {
 	if moreRandomNum <= 10.0 {
 		fmt.Printf("%s was caught!\n", pokemonName)
 		cfg.user[pokemonName] = pokemon
+		fmt.Println("You may now inspect it with the inspect command.")
 		fmt.Println()
 	} else {
 		fmt.Printf("%s escaped!\n", pokemonName)
