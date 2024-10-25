@@ -31,7 +31,9 @@ func startRepl(config *Config) {
 		allCommands := commands()
 		command, exists := allCommands[commandName]
 		if !exists {
+			fmt.Println()
 			fmt.Println("Unknown command. Type 'help' for a list of commands.")
+			fmt.Println()
 			continue
 		}
 
