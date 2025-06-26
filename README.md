@@ -1,7 +1,7 @@
 
 # 🐦‍🔥 pokedexcli
 
->  A sleek and interactive CLI tool to explore the Pokémon world — catch, inspect, and navigate your way through the Pokédex right from your terminal. Built with Go.
+>  A sleek and interactive CLI tool to explore the Pokémon world — catch, inspect, explore and enjoy the Pokédex right from your terminal. Built with Go.
 
 ## ✨ Features
 
