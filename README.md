@@ -20,7 +20,7 @@
 | `help`             | Show available commands              |
 | `map`              | Show current map and directions      |
 | `mapb`             | Move back in the map                 |
-| `explore`          | Explore and discover Pokémon         |
+| `explore <area-name>`| Explore and discover Pokémon         |
 | `catch <name>`     | Catch a Pokémon                      |
 | `inspect <name>`   | Inspect a caught Pokémon             |
 | `pokedex`          | Show all caught Pokémon              |
@@ -37,7 +37,7 @@
 ```bash
 git clone https://github.com/Swapnilgupta8585/pokedexcli
 cd pokedexcli
-go run main.go
+go run .
 ```
 
 ## 🏗️ Project Structure
