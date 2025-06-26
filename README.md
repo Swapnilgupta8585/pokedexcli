@@ -30,9 +30,9 @@
 
 ### Prerequisites
 
-- [Go](https://golang.org/dl/) 1.18 or higher
+- [Go 1.23.2](https://go.dev/dl/) or higher
 
-### Installation
+## Installation
 
 ```bash
 git clone https://github.com/Swapnilgupta8585/pokedexcli
@@ -42,11 +42,25 @@ go run .
 
 ## 🏗️ Project Structure
 ```
-├── command*.go        # Individual CLI command implementations
-├── repl.go            # REPL environment logic
-├── main.go            # App entry point
-├── go.mod             # Go module file
-└── README.md
+pokedexcli/
+├── main.go # App entry point & REPL launch
+├── repl.go # REPL loop and command parsing
+├── commands.go # Command registration and lookup
+├── command*.go # Individual command implementations
+│ ├── commandCatch.go
+│ ├── commandExplore.go
+│ ├── commandInspect.go
+│ ├── commandMap.go
+│ └── ...etc
+├── internal/
+│ └── pokecache/
+│          └── cache.go # In-memory cache implementation
+│ └── pokeapi/
+│          └── apiCall.go # General-purpose API handler with cache
+│          └── apiExploreCall.go # Explore endpoint handler with caching
+│          └── apiPokemonCall.go # Pokémon data fetching with caching
+├── go.mod # Go module metadata
+└── README.md # Project documentation
 ```
 
 ## 🧑‍💻 Contributing
